@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💛</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: #FFD84D;
+  font-family: 'Comic Sans MS', cursive;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* RANDOM WALLPAPER */
+.wall {
+  position: absolute;
+  font-size: 60px;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* BIG ENVELOPE */
+#envelope {
+  font-size: 160px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 5;
+  animation: bounce 1.6s infinite;
+}
+
+#envelope span {
+  display: block;
+  font-size: 26px;
+  margin-top: -20px;
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* CARD */
+#card {
+  display: none;
+  text-align: center;
+  z-index: 5;
+}
+
+#gif {
+  width: 220px;
+}
+
+button {
+  padding: 10px 26px;
+  font-size: 18px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+}
+
+#yes {
+  background: #ff4d6d;
+  color: white;
+}
+
+#no {
+  background: #555;
+  color: white;
+  position: absolute;
+}
+
+#noText {
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+/* FLOWERS */
+.fall {
+  position: absolute;
+  font-size: 28px;
+  animation: fall 4s linear infinite;
+}
+
+@keyframes fall {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-120px); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ENVELOPE -->
+<div id="envelope" onclick="openCard()">
+  💌
+  <span>Open 💛</span>
+</div>
+
+<!-- CARD -->
+<div id="card">
+  <!-- ASKING GIF -->
+  <img id="gif" src="https://media1.tenor.com/m/yNFbO-SVaVAAAAAd/panda-bear-brown-bear.gif">
+  <h2>Will you be my Valentine 💝💗🤧</h2>
+  <button id="yes" onclick="yesClicked()">Yes 💛</button>
+  <button id="no" onclick="moveNo()">No 🙄</button>
+  <div id="noText"></div>
+</div>
+
+<script>
+/* RANDOM WALLPAPER GENERATOR */
+const icons = ["🧸","🍔","🧋"];
+for (let i = 0; i < 22; i++) {
+  let el = document.createElement("div");
+  el.className = "wall";
+  el.innerText = icons[Math.floor(Math.random()*icons.length)];
+  el.style.left = Math.random()*100 + "vw";
+  el.style.top = Math.random()*100 + "vh";
+  el.style.transform = "rotate(" + (Math.random()*40 - 20) + "deg)";
+  document.body.appendChild(el);
+}
+
+/* NO GIFS (FIXED ✅) */
+let sadGifs = [
+  "https://media1.tenor.com/m/JSkGo2B3op8AAAAd/dirt-alone.gif",
+  "https://media1.tenor.com/m/JWR84HnG-eEAAAAd/sick-feeling.gif",
+  "https://media1.tenor.com/m/7zfJK1SOYxoAAAAd/milk-and-mocha.gif"
+];
+
+let noTexts = [
+  "schii 🤧",
+  "I can wait 🤧",
+  "is it final answer? 🤧",
+  "I will be better 🤧",
+  "u sure precious 🤧"
+];
+
+let noCount = 0;
+
+function openCard() {
+  document.getElementById("envelope").style.display = "none";
+  document.getElementById("card").style.display = "block";
+}
+
+function moveNo() {
+  let btn = document.getElementById("no");
+  btn.style.left = Math.random() * (window.innerWidth - 120) + "px";
+  btn.style.top = Math.random() * (window.innerHeight - 60) + "px";
+
+  document.getElementById("gif").src =
+    sadGifs[noCount % sadGifs.length];
+
+  document.getElementById("noText").innerText =
+    noTexts[noCount % noTexts.length];
+
+  noCount++;
+}
+
+function yesClicked() {
+  document.body.innerHTML = `
+    <div style="text-align:center; z-index:5;">
+      <img src="https://media1.tenor.com/m/im7hu4LtdV8AAAAd/mochi-mochimochi.gif" width="270">
+      <h1 style="color:#ff4d6d;">YAYYY 💛💛💛</h1>
+    </div>
+  `;
+  setInterval(flowers, 220);
+}
+
+function flowers() {
+  let el = document.createElement("div");
+  el.className = "fall";
+  el.innerHTML = Math.random() > 0.5 ? "💛" : "🌹";
+  el.style.left = Math.random() * window.innerWidth + "px";
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 4000);
+}
+</script>
+
+</body>
+</html>
